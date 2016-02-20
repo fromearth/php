@@ -1,0 +1,150 @@
+###########################################################################
+# コーディング規約
+#
+# @filename coding-rule.txt
+# @category Php
+# @package  PhpCodingRule
+# @author   fromearth
+# @link     https://github.com/fromearth
+###########################################################################
+
+
+* PHPファイル書式
+
+ - PHPタグは <?php ～ ?> のみを使う
+
+ - 字下げは半角スペース4文字で行う
+
+ - 1行の長さは、最大120文字まで（半角文字幅で120文字分）
+
+ - 改行コードはUNIX形式・Windows形式どちらでもよい（１ファイル内は、どちらか一方に統一する）
+
+ - 文字エンコーディングは UTF-8 に統一（BOMなし）
+
+ - ファイル終端は改行コードで終わる
+
+
+* 命名規約
+
+ - クラスファイル名:
+   英大文字で始まる英数文字のキャメルケースとし、クラス名と一致させる。
+   例： Fooクラス のファイル名は Foo.php とする。
+        FooBarクラスなら FooBar.php
+   特殊ケースとして、クラス名に略語（頭文字）を使う場合すべて英大文字でもよい。
+   例： DataBase -> DB.php
+        UserAgent -> UA.php
+
+ - クラス以外のファイル名：
+   英小文字で始まる英数小文字のスネーク
+   例： foo_bar_baz.php
+
+ - 関数名 / メソッド名:
+   英小文字の動詞で始まる英数文字のキャメルケースとする。
+   例： getMyAccount()
+        getAccountList()
+        isMember()
+
+   ※基本的には関数名は以下の特徴を持つものとする。
+     ・「get」で始まる関数名は、何かしらのデータを返却
+     ・「List」で終わる関数名は、配列データ（複数行）を返却
+     ・「Info」で終わる関数名は、配列データ（詳細情報一式）を返却
+     ・「List」「Info」で終わっていない関数名は、スカラーデータを返却
+     ・「is」「can」「has」で始まる関数名は、bool値を返却
+   ※その他、関数名を見て、何をどう処理する関数かがわかる名前付けが望ましい。
+
+ - 変数名:
+   英小文字で始まる英数文字のキャメルケースとする。
+   例： $myAccount = 'foo';
+        $accountList = array('foo', 'bar', 'baz');
+        $isMember = true;
+
+
+ - 連想配列の添え字:
+   英小文字で始まる英数小文字のスネークを使う。
+   例： $array['my_account'] = 'foo';
+
+   ※連想配列の添え字は、下記のものと一致させる。
+     ・リクエストパラメータ名 ） http://www.example.com/my_account/foo
+     ・フォーム要素名         ） <input type="text" name="my_account" value="foo">
+     ・DBテーブルのカラム名   ） SELECT my_account FROM user;
+
+ - 定数名:
+   英大文字で始まる英数大文字のスネークを使う。
+   例： define('MY_ACCOUNT', 'foo');
+
+
+* コーディングスタイル
+
+ - ファイル全体PHPコードのみで書く場合、ファイル終端に ?> 終了タグは書かない
+
+ - 文字列リテラルはシングルクォート・ダブルクォートどちらでもよい
+   例： $str = '文字列リテラル';
+        $str = "文字列リテラル";
+        $array['my_account'];
+        $array["my_account"];
+
+ - 変数展開は、ブレースで囲む
+   例： $str = "アカウント名は{$myAccount}です。";
+
+ - 関数引数区切りや配列要素区切りカンマ後方およびforループ区分けセミコロン後方は、半角スペースで空ける
+   例： func($a, $b, $c);
+        list($a, $b, $c) = array("foo", "bar", "baz");
+        define("FOO_BAR", 10);
+        for ($i=0; $i<$length; $i++) { ... }
+
+   ※関数の引数を改行 / より下にくる行を右寄りにし右肩下がりに書く
+     func($a,
+          $b, $c);
+
+   ※配列の要素を改行 / array()は最後の要素後にもカンマ書けるのでできるだけ書く
+     $array = array(
+                  $a,
+                  $b,
+                  $c,
+              );
+
+ - 演算子の前後は、半角スペースで空ける
+   例： if ($a == $b)
+        if ($a > $b)
+        $a = $b;
+        $s = "ABC" . $a;
+        $array = array("foo" => "bar");
+
+   ※カンマ等の区切りで複数が横一列に並ぶ場合に限り、演算子前後スペース入れると間延びするので、例外的に入れない
+   例外の例： func("foo"=>1, "bar"=>2, "baz"=>3);
+              function func($param1, $param2, $param=null) { ... }
+              array("foo"=>1, "bar"=>2, "baz"=>3);
+              for ($i=0; $i<$length; $i++) { ... }
+
+ - 制御構造のブロックの書き方
+   例： if (expr) {
+        } else if (expr) {
+        } else {
+        }
+
+        while (expr) {
+        }
+
+        switch (expr) {
+        case 'foo':
+        case 'bar':
+        default:
+        }
+
+        // forループの演算子前後にスペース空けると間延びするので ; 後方のみにスペース
+        for ($i=0; $i<$length; $i++) {
+        }
+
+        foreach ($list as $key => $data) {
+        }
+
+ - クラスについては、phpDocumentorの書式にならう
+   クラスの場合は制御構造と違い、開始ブロックは改行して単独に書く
+   （クラスおよびメソッドすぐ上にはドキュメントブロックがある為、改行した方が見栄えがいい）
+   例： class Foo
+        {
+            public function bar()
+            {
+            }
+        }
+

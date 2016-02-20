@@ -1,0 +1,10 @@
+h1. ■PHP関連
+
+h2. リポジトリ概要
+
+<pre>+- data/           (データファイル / 設定ファイル)
++- examples/       (サンプルコード集)
++- lib/            (ライブラリ)
++- README.textile      (THIS FILE)
++- coding-rule.txt     (コーディング規約)
+</pre>
